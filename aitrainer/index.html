@@ -375,37 +375,41 @@
         });
         
         // Continue button redirects to PayFast (hidden URL)
-        continueBtn.addEventListener('click', function() {
-            const form = document.createElement('form');
-            form.method = 'post';
-            form.action = 'https://payment.payfast.io/eng/process';
-            
-            // Hidden payment details
-            const fields = {
-                cmd: '_paynow',
-                receiver: '23908197',
-                return_url: 'https://cornerroom.co.za/AITrainer/brBFoydeF',
-                cancel_url: 'https://cornerroom.co.za',
-                notify_url: 'https://cornerroom.co.za/AITrainer/brBFoydeF',
-                amount: '49.99',
-                item_name: 'Ai Trainer',
-                subscription_type: '1',
-                recurring_amount: '49.99',
-                cycles: '0',
-                frequency: '3'
-            };
-            
-            for (const [name, value] of Object.entries(fields)) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
-            }
-            
-            document.body.appendChild(form);
-            form.submit();
-        });
+continueBtn.addEventListener('click', function() {
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = 'https://payment.payfast.io/eng/process';
+    
+    // Hidden payment details
+    // If you want to use a dynamic receiverId, declare it here
+   const receiverId = import.meta.env.VITE_RECEIVER_ID; // Uncomment and set value as needed
+    // console.log(receiverId);
+
+    const fields = {
+        cmd: '_paynow',
+        // receiver_id: receiverId, // Uncomment if using dynamic receiverId
+        return_url: 'https://cornerroom.co.za/AITrainer/brBFoydeF',
+        cancel_url: 'https://cornerroom.co.za',
+        notify_url: 'https://cornerroom.co.za/AITrainer/brBFoydeF',
+        amount: '49.99',
+        item_name: 'Ai Trainer',
+        subscription_type: '1',
+        recurring_amount: '49.99',
+        cycles: '0',
+        frequency: '3'
+    };
+    
+    for (const [name, value] of Object.entries(fields)) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+});
         
         // Security details toggle
         let detailsVisible = false;

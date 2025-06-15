@@ -1,11 +1,17 @@
-name: Deploy to GitHub Pages
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install && npm run build
+      - run: |
+          npm install
+          npm run build
+          ls -l dist/  # Verify build output
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
